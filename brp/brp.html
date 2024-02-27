@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="brp.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>Border Rule Previewer</title>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Border Rule Previewer</h3>
+        <p>Adjust the controls to visualize how a container will react to various css rules surrounding border</p>
+        <div id="controls">
+            <label>Thickness:</label><input type="range" name="border-thick" id="bThickness" min="1" max="50" step="1">
+            <label>Radius:</label><input type="range" name="border-radius" id="bRadius" min="1" max="200" step="1">
+            <label>Color:</label><input type="color" name="border-color" id="bColor">
+            <label>Style: </label><select id="styles">
+                <option value="none">None</option>
+                <option value="dotted">Dotted</option>
+                <option value="inset">Inset</option>
+                <option value="dashed solid">Dashed Solid</option>
+                <option value="dashed double none">Dashed Double None</option>
+                <option value="dashed groove none dotted">Dashed Groove None Dotted</option>
+            </select>
+        </div>
+        <div id="controls2">
+            <label>Radius Top Left: </label><input type="range" name="border-radius" id="bRadiusTopLeft" min="1" max="500" step="1">
+            <label>Radius Top Right: </label><input type="range" name="border-radius" id="bRadiusTopRight" min="1" max="500" step="1">
+            <label>Radius Bottom Left: </label><input type="range" name="border-radius" id="bRadiusBottomLeft" min="1" max="500" step="1">
+            <label>Radius Bottom Right: </label><input type="range" name="border-radius" id="bRadiusBottomRight" min="1" max="500" step="1">
+        </div>
+        <div id="boxPreview"></div>
+        <div id="cssOutput">
+            <textarea id="generatedCss" disabled></textarea>
+            <button type="button" onclick="handleCopyToClipboard()">Copy to Clipboard!</button>
+        </div>
+    </div>
+    <script src="./brp.js"></script>
+</body>
+
+</html>

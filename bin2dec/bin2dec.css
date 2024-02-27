@@ -1,0 +1,62 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto';
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-field {
+    text-align:left;
+    margin: 12px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+input {
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 300px;
+    font-size: large;
+}
+
+input#binary.error {
+    border: 1px solid red;
+    background: #fccccc;
+    border-radius: 8px;
+}
+
+input#binary.error:focus-visible {
+    outline: red auto 1px;
+    background: #fccccc;
+}
+
+select#numberInput {
+    width: 120px;
+    height: 30px;
+    border-radius: 8px;
+    font-weight: bolder;
+}
+
+.error-text {
+    display: block;
+    color: red;
+    font-size: smaller;
+}
+
+.no-error {
+    display: none;
+}

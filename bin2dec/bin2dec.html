@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bin2dec.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <title>Binary to Decimal</title>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <select id="numberInput">
+                <option value="binary">Binary</option>
+                <option value="hex">Hexadecimal</option>
+                <option value="oct">Octal</option>
+            </select>
+            <h3>Converter to Decimal</h3>
+        </div>
+        <div class="form">
+            <div class="form-field">
+                <label for="binary" id="inputLabel">Binary&nbsp;&nbsp;</label><input type="text" id="binary" maxlength="16"/>
+                <span id="errorText" class="no-error">Invalid binary digit provided</span>
+            </div>
+            <div class="form-field">
+                <label for="output">Decimal&nbsp;&nbsp;</label><input type="text" id="output" disabled>
+            </div>
+        </div>
+    </div>
+    <script src="./bin2dec.js"></script>
+</body>
+</html>
