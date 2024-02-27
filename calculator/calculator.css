@@ -1,0 +1,87 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto';
+}
+
+button {
+    background: white;
+    border: 1px solid black;
+    border-radius: 999px;
+    font-size: x-large;
+}
+
+button:hover {
+    color: white;
+    cursor: pointer;
+    animation: hoverAnim 1s alternate infinite;
+}
+
+#screenText {
+    font-family: 'Micro 5';
+    font-size: 4em;
+    margin: 24px;
+}
+
+#calculator {
+    width: 265px;
+    height: 425px;
+    border: 1px solid black;
+    border-radius: 16px;
+}
+
+#screen {
+    width: 100%;
+    height: 75px;
+    border-bottom: 1px solid black;
+    border-radius: 16px;
+}
+
+#controls {
+    display: flex;
+    flex-direction: row;
+}
+
+#buttons, #operators {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.digit {
+    width: 50px; 
+    height: 50px;
+}
+
+.buttonContainer {
+    padding-left: 12px;
+    padding-top: 16px
+}
+
+.selected {
+    animation: selected-animation 1s alternate infinite;
+}
+
+@keyframes selected-animation {
+    0% {
+        background-color: green;
+    }
+
+    100% {
+        background-color: greenyellow;
+    }
+}
+
+@keyframes hoverAnim {
+    0% {
+        background-color: aqua;
+    }
+
+    100% {
+        background-color: blue;
+    }
+}

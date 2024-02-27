@@ -1,4 +1,4 @@
-const apps = ['bin2dec', 'brp'];
+const apps = ['bin2dec', 'brp', 'calculator'];
 
 const ul = document.getElementById('apps');
 apps.forEach(app => {

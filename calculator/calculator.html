@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="calculator.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Micro+5&display=swap" rel="stylesheet">
+    <title>calculata!</title>
+</head>
+
+<body>
+    <div id="calculator">
+        <div id="screen">
+            <span id="screenText"></span>
+        </div>
+        <div id="controls">
+            <div id="buttons">
+                <div class="row">
+                    <div class="buttonContainer"><button type="button" value="ALL_CLEAR" class="digit">AC</button></div>
+                    <div class="buttonContainer"><button type="button" value="CLEAR" class="digit">C</button></div>
+                    <div class="buttonContainer"><button type="button" value="MEMORY_ADD" class="digit">M+</button></div>
+                </div>
+                <div class="row">
+                    <div class="buttonContainer"><button type="button" value="7" class="digit">7</button></div>
+                    <div class="buttonContainer"><button type="button" value="8" class="digit">8</button></div>
+                    <div class="buttonContainer"><button type="button" value="9" class="digit">9</button></div>
+                </div>
+                <div class="row">
+                    <div class="buttonContainer"><button type="button" value="4" class="digit">4</button></div>
+                    <div class="buttonContainer"><button type="button" value="5" class="digit">5</button></div>
+                    <div class="buttonContainer"><button type="button" value="6" class="digit">6</button></div>
+                </div>
+                <div class="row">
+                    <div class="buttonContainer"><button type="button" value="1" class="digit">1</button></div>
+                    <div class="buttonContainer"><button type="button" value="2" class="digit">2</button></div>
+                    <div class="buttonContainer"><button type="button" value="3" class="digit">3</button></div>
+                </div>
+                <div class="row">
+                    <div class="buttonContainer"><button type="button" value="." class="digit">.</button></div>
+                    <div class="buttonContainer"><button type="button" value="0" class="digit">0</button></div>
+                    <div class="buttonContainer"><button type="button" value="EVALUATE" class="digit">=</button></div>
+                </div>
+            </div>
+            <div id="operators">
+                <div class="row">
+                    <div class="buttonContainer"><button type="button" value="MEMORY_RECALL" class="digit">MR</button></div>
+                </div>
+                <div class="row">
+                    <div class="buttonContainer"><button id="divide" type="button" value="DIVIDE" class="digit">&divide;</button></div>
+                </div>
+                <div class="row">
+                    <div class="buttonContainer"><button id="times" type="button" value="MULTIPLY" class="digit">&times;</button></div>
+                </div>
+                <div class="row">
+                    <div class="buttonContainer"><button id="add" type="button" value="ADD" class="digit">&plus;</button></div>
+                </div>
+                <div class="row">
+                    <div class="buttonContainer"><button id="sub" type="button" value="SUBTRACT" class="digit">&minus;</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="calculator.js"></script>
+</body>
+
+</html>
