@@ -1,182 +1,112 @@
-let display = '0';
+let calculator = {
+    operand1: '',
+    operand2: '',
+    operatorValue: '',
 
-let operand1 = '';
-let operand2 = '';
-let operator = '';
+    operatorValueMappings: {
+        'DIVIDE': 'divide',
+        'MULTIPLY': 'times',
+        'ADD': 'add',
+        'SUBTRACT': 'sub',
+    },
 
-let memory = 0;
+    add: (op1, op2) => { return op1 + op2; },
+    sub: (op1, op2) => { return op1 - op2; },
+    times: (op1, op2) => { return op1 * op2; },
+    divide: (op1, op2) => { return op1 / op2; },
 
-let rpn = [];
+    clearScreen: () => {
+        document.getElementById('screenText').textContent = '0';
+    },
 
-document.getElementById('screenText').textContent = display;
+    evaluate: () => {
+        let result = 0;
+        if (operandStateMachine.canBeEvaluated()) {
+            result = calculator[calculator.operatorValueMappings[calculator.operatorValue]](parseInt(calculator.operand1), parseInt(calculator.operand2));
+        }
 
-const handleDisplayUpdate = (current, next) => {
-    if (current === '0') {
-        current = next;
-    }
-    else {
-        current += next;
-    }
-    document.getElementById('screenText').textContent = current;
-    return current;
+        return result;
+    },
+
+    updateStateMachine: (stateUpdate) => operandStateMachine[stateUpdate.key] = stateUpdate.value,
+
+    updateScreen: (v) => document.getElementById('screenText').textContent = v.toString(),
+
+    initializeScreen: () => document.getElementById('screenText').textContent = '0',
 };
 
-const handleUpdatingCorrectOperand = (operand) => {
-    if (!operand1 || (operand1 && !operator)) {
-        operand1 += operand;
+let operandStateMachine = {
+    setOperand1: false,
+    setOperator: false,
+    setOperand2: false,
+    setEvaluateState: false,
+    canBeEvaluated: () => operandStateMachine.setOperand1 && operandStateMachine.setOperand2 && operandStateMachine.setOperator,
+    noStateSet: () => !operandStateMachine.setOperand1 && !operandStateMachine.setOperand2 && !operandStateMachine.setOperator,
+
+    operand1State: () => operandStateMachine.setOperand1 && !operandStateMachine.setOperand2 && !operandStateMachine.setOperator,
+    operand2State: () => operandStateMachine.setOperand1 && operandStateMachine.setOperand2 && operandStateMachine.setOperator,
+
+    isOperatorStateTransition: value => (value === 'ADD' || value === 'MULTIPLY' || value === 'DIVIDE' || value === 'SUBTRACT'),
+
+    isEvaluateStateTransition: value => value === 'EVALUATE',
+
+    clearSpecificState: (stateName) => operandStateMachine[stateName] = false,
+
+    clearFlags: () => {
+        operandStateMachine.setOperand1 = false;
+        operandStateMachine.setOperand2 = false;
+        operandStateMachine.setOperator = false;
+    }
+};
+
+const checkStateAndSetOperand = (calculator, stateMachine, value) => {
+    if (value === 'ALL_CLEAR') {
+        calculator.clearScreen();
+        stateMachine.clearFlags();
+        calculator.operatorValue = '';
+        calculator.operand2 = '';
+        calculator.operand1 = '';
         return;
     }
 
-    if ((!operand2 && operator) || (operand1 && operator)) {
-        operand2 += operand;
-        return;
+    if (stateMachine.noStateSet()) {
+        stateMachine.setOperand1 = true;
+        calculator.operand1 = value;
+        calculator.updateScreen(calculator.operand1);
+    } else if (stateMachine.operand1State() && stateMachine.isOperatorStateTransition(value)) {
+        stateMachine.setOperator = true;
+        calculator.operatorValue = value;
+        stateMachine.setOperand2 = true;
+    } else if (stateMachine.operand1State() && !stateMachine.isOperatorStateTransition(value)) {
+        calculator.operand1 += value;
+        calculator.updateScreen(calculator.operand1);
+    } else if (stateMachine.operand2State() && !stateMachine.isEvaluateStateTransition(value)) {
+        calculator.operand2 += value;
+        calculator.updateScreen(calculator.operand2);
+    } else if (stateMachine.operand2State() && stateMachine.isEvaluateStateTransition(value)) {
+        stateMachine.setEvaluateState = true;
+        const result = calculator['evaluate']();
+        console.log(result);
+
+        stateMachine.clearSpecificState('setOperand2');
+        stateMachine.clearSpecificState('setOperator');
+        stateMachine.clearSpecificState('setEvaluateState');
+        calculator.operatorValue = '';
+        calculator.operand2 = '';
+        calculator.operand1 = result.toString();
+        calculator.updateScreen(calculator.operand1);
     }
 };
 
-const checkToConvertInfixToRPN = () => {
-    if (operand1 && operand2 && operator) {
-        rpn.push(parseInt(operand1, 10));
-        rpn.push(parseInt(operand2, 10));
-        rpn.push(operator);
-
-        operand1 = '';
-        operand2 = '';
-        operator = '';
-        return true;
-    }
-    return false;
-};
-
-const selectOperator = (operator, remove) => {
-    switch (operator) {
-        case '+':
-            if (!remove) 
-                document.getElementById('add').classList.add(['selected']);
-            else 
-                document.getElementById('add').classList.remove(['selected']);
-            break;
-        case '-':
-            if (!remove) 
-                document.getElementById('sub').classList.add(['selected']);
-            else 
-                document.getElementById('sub').classList.remove(['selected']);
-            break;
-        case '/':
-            if (!remove) 
-                document.getElementById('divide').classList.add(['selected']);
-            else 
-                document.getElementById('divide').classList.remove(['selected']);
-            break;
-        case '*':
-            if (!remove) 
-                document.getElementById('times').classList.add(['selected']);
-            else 
-                document.getElementById('times').classList.remove(['selected']);
-            break;
-    }
-    return;
-};
-
-const calculate = (op1, op2, operator) => {
-    switch (operator) {
-        case '+': 
-            return op1 + op2;
-        case '-':
-            return op1 - op2;
-        case '/':
-            return op1 / op2;
-        case '*': 
-            return op1 * op2;
-    }
-};
+calculator.initializeScreen();
 
 document.addEventListener('click', (event) => {
-    const eventType = event.target.value;
+    if (event.target.value === undefined) { return; }
 
-    switch (eventType) {
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-        case '0':
-            handleUpdatingCorrectOperand(eventType);
-            display = handleDisplayUpdate(display, eventType);
-            break;
-        case 'ADD':
-            if (operator) {
-                checkToConvertInfixToRPN();
-            }
-            else {
-                operator += '+';
-                selectOperator('+');
-                display = handleDisplayUpdate('0', '0');
-            }
-            break;
-        case 'SUBTRACT':
-            if (operator) {
-                checkToConvertInfixToRPN();
-            }
-            else {
-                operator += '-';
-                selectOperator('-');
-                display = handleDisplayUpdate('0', '0');
-            }
-            break;
-        case 'DIVIDE':
-            if (operator) {
-                checkToConvertInfixToRPN();
-            }
-            else {
-                operator += '/';
-                selectOperator('/');
-                display = handleDisplayUpdate('0', '0');
-            }
-            break;
-        case 'MULTIPLY':
-            if (operator) {
-                checkToConvertInfixToRPN();
-            }
-            else {
-                operator += '*';
-                selectOperator('*');
-                display = handleDisplayUpdate('0', '0');
-            }
-            break;
-        case 'EVALUATE':
-            if (checkToConvertInfixToRPN()) {
-                const operator = rpn.pop();
-                const op2 = rpn.pop();
-                const op1 = rpn.pop();
-
-                const result = calculate(op1, op2, operator);
-                selectOperator(operator, true);
-                display = handleDisplayUpdate('0', result.toString());
-                operand1 = result.toString();
-                rpn.push(result);
-            }
-            break;
-        case 'CLEAR':
-            operand1 = '';
-            break;
-        case 'ALL_CLEAR':
-            rpn = [];
-            operand1 = '';
-            operand2 = '';
-            operator = '';
-            display = handleDisplayUpdate('0', '0');
-            break;
-        case 'MEMORY_ADD':
-            memory = rpn[0];
-            break;
-        case 'MEMORY_RECALL':
-            if (operand1 && !operand2) operand2 = memory;
-            break;
-    }
-
-
+    const value = event.target.value;
+    console.log(calculator);
+    console.log(operandStateMachine);
+    checkStateAndSetOperand(calculator, operandStateMachine, value);
+    console.log(calculator);
+    console.log(operandStateMachine);
 });

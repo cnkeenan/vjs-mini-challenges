@@ -17,7 +17,8 @@ button {
 
 button:hover {
     cursor: pointer;
-    animation: hoverAnim 1s alternate infinite;
+    background: black;
+    color: white;
 }
 
 #screenText {
@@ -65,28 +66,4 @@ button:hover {
 .buttonContainer {
     padding-left: 12px;
     padding-top: 16px
-}
-
-.selected {
-    animation: selected-animation 1s alternate infinite;
-}
-
-@keyframes selected-animation {
-    0% {
-        background-color: green;
-    }
-
-    100% {
-        background-color: greenyellow;
-    }
-}
-
-@keyframes hoverAnim {
-    0% {
-        background-color: aqua;
-    }
-
-    100% {
-        background-color: blue;
-    }
 }
